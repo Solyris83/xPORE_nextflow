@@ -1,0 +1,1000 @@
+  174  find / -iname "pkg-config"
+  175  vim /usr/bin/pkg-config
+  176  sudo vim ~/.bashrc
+  177  source ~/.bashrc
+  178  conda activate nextflow
+  179  R
+  180  sudo vim /usr/bin/pkg-config
+  181  pkg-config --libs openssl
+  182  sudo apt-get install  libssl-dev
+  183  R
+  184  history
+  185  cd software/samtools-1.12/bin/
+  186  pwd
+  187  cd ..
+  188  wget https://github.com/samtools/bcftools/releases/download/1.12/bcftools-1.12.tar.bz2
+  189  tar -xf bcftools-1.12.tar.bz2 
+  190  cd bcftools-1.12/
+  191  ll
+  192  ./configure --prefix=$HOME/software/bcftools-1.12/
+  193  make
+  194  make install
+  195  bcftools
+  196  ll
+  197  cd bin/
+  198  ll
+  199  pwd
+  200  nextflow run nf-core/nanoseq -r 1.1.0 --input sampleSheet.csv --protocol directRNA --skip_basecalling --skip_demultiplexing --save_align_intermeds -profile docker 
+  201  conda activate nextflow
+  202  nextflow run nf-core/nanoseq -r 1.1.0 --input sampleSheet.csv --protocol directRNA --skip_basecalling --skip_demultiplexing --save_align_intermeds --max_cpus 16 --max_memory '59.GB' -profile docker 
+  203  cd fast5/
+  204  ll
+  205  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ ON001-RNA-R00185  --recursive --exclude "*" --include ".fast5"
+  206  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ ON001-RNA-R00185  --recursive --exclude "*" --include ".fast5" --profile lizh
+  207  ll
+  208  cd ON001-RNA-R00185/
+  209  ll
+  210  cd ..
+  211  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ ON001-RNA-R00185 --recursive --exclude "*" --include ".fast5" --profile lizh
+  212  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ ON001-RNA-R00185 --exclude "*" --include ".fast5" --profile lizh
+  213  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ ON001-RNA-R00185 --recursive --exclude "*" --include "*.fast5" --profile lizh
+  214  screen -r
+  215  cd /mnt/
+  216  ll
+  217  mkdir volume1
+  218  lsblk
+  219  sudo mkfs -t ext /dev/nvme1n
+  220  sudo mkfs -t ext /dev/nvme1n1
+  221  sudo mkfs -t ext4 /dev/nvme1n1
+  222  sudo mount -t ext4 /dev/nvme1n1 /mnt/volume1
+  223  sudo chmod 777 /mnt/volume1/
+  224  ll
+  225  cd volume1/
+  226  ll
+  227  mkdir fastq
+  228  cd fastq/
+  229  aws configure --profile lizh
+  230  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/RML1318-T1/ /mnt/volume1/fastq/ --exclude "*" --include "*.fastq.gz" --dryrun
+  231  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/RML1318-T1/ /mnt/volume1/fastq/ --exclude "*" --include "*.fastq.gz" --profile lizh --dryrun
+  232  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/RML1318-T1/ /mnt/volume1/fastq/ --exclude "*" --include "*.fastq.gz" --profile lizh 
+  233  ll
+  234  mkdir ON001-RNA-R00185
+  235  mv 20210713_1310_X4_FAQ34751_3034dab6/ ON001-RNA-R00185/
+  236  mv 20210713_1619_X4_FAQ34751_166dd443/ ON001-RNA-R00185/
+  237  ll
+  238  cd ON001-RNA-R00185/
+  239  ll
+  240  cd ..
+  241  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00184 /mnt/volume1/fastq/ --exclude "*" --include "*.fastq.gz" --profile lizh 
+  242  ll
+  243  cd RML1317-T1/
+  244  ll
+  245  cd ..
+  246  mkdir ON001-RNA-R00184
+  247  mv RML1317-T1/ ON001-RNA-R00184
+  248  ll
+  249  cd ..
+  250  mkdir genome
+  251  cd genome/
+  252  wget http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/dna/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.*.fa.gz
+  253  ll
+  254  cd ..
+  255  ll
+  256  mv ensembl_fileList.txt genome/
+  257  cd genome/
+  258  ll
+  259  input="ensembl_fileList.txt" 
+  260  while IFS= read -r line; do wget  http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/dna/${line} ; done < "$input"
+  261  ll
+  262  wget http://ftp.ensembl.org/pub/release-104/gtf/macaca_fascicularis/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf.gz
+  263  ll
+  264  cd ..
+  265  ll
+  266  conda env list
+  267  conda activate nextflow
+  268  nextflow run nf-core/nanoseq -r 1.1.0 -profile docker
+  269  wget http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/cdna/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz
+  270  cd genome/
+  271  ll
+  272  cat Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.1.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.2.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.3.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.4.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.5.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.6.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.7.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.8.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.9.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.10.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.11.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.12.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.13.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.14.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.15.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.16.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.17.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.18.fa.gz  Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.19.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.20.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.X.fa.gz Macaca_fascicularis.Macaca_fascicularis_6.0.dna.nonchromosomal.fa.gz > Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa.gz
+  273  ll
+  274  gunzip Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa.gz
+  275  cd ..
+  276  cd fastq/
+  277  ll
+  278  cd ON001-RNA-R00184
+  279  ll
+  280  cd RML1317-T1/
+  281  ll
+  282  cd ..
+  283  ll
+  284  cd ..
+  285  find ON001-RNA-R00184/ -type f -name '*.fastq.gz' exec cat {} \; > RML1317-T1.fastq.gz
+  286  find ON001-RNA-R00184/ -type f -name '*.fastq.gz' -exec cat {} \; > RML1317-T1.fastq.gz
+  287  ll
+  288  cd ON001-RNA-R00185/
+  289  ll
+  290  cd ..
+  291  find ON001-RNA-R00184/ -type f -name '*.fastq.gz' -exec cat {} \; > .fastq.gz
+  292  RML1318-T1
+  293  find ON001-RNA-R00185/ -type f -name '*.fastq.gz' -exec cat {} \; > RML1318-T1.fastq.gz
+  294  cd ..
+  295  ll
+  296  cd fastq/
+  297  ll
+  298  pwd
+  299  cd ..
+  300  cd genome/
+  301  ll
+  302  pwd
+  303  gunzip Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf.gz
+  304  df -h
+  305  ll
+  306  history
+  307  ll
+  308  samtools faidx Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa
+  309  ll
+  310  cd ..
+  311  screen 
+  312  screen -r
+  313  ll
+  314  conda create --name xpore
+  315  conda create --name xpore python=3.9
+  316  conda activate xpore
+  317  conda install -c bioconda xpore
+  318  pip install xpore
+  319  xpore-dataprep --help
+  320  xpore
+  321  xpore -help
+  322  xpore --help
+  323  xpore dataprep -h
+  324  nanopolish index 
+  325  conda install -c bioconda nanopolish
+  326  nanpolish
+  327  nanopolish
+  328  nanopolish index
+  329  screen -r
+  330  screen 
+  331  nanopolish index
+  332  screen -r
+  333  cd /mnt/volume1/
+  334  ll
+  335  mkdir fast5
+  336  cd fast5/
+  337  ll
+  338  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00184/ ON001-RNA-R00184 --exclude "*" --include "*.fast5" --profile lizh
+  339  ll
+  340  cd ON001-RNA-R00184/
+  341  ll
+  342  cd RML1317-T1/
+  343  ll
+  344  cd 20210713_1309_X1_FAQ30746_196b92af/
+  345  ll
+  346  cd ..
+  347  find RML1317-T1/ -type f -print0 | xargs -0 mv -t .
+  348  ll
+  349  cd ..
+  350  cd fast5/
+  351  ll
+  352  cd ..
+  353  nanopolish index -d fast5/ON001-RNA-R00184/ fastq/RML1317-T1.fastq.gz 
+  354  conda activate xpore
+  355  nanopolish index -d fast5/ON001-RNA-R00184/ fastq/RML1317-T1.fastq.gz 
+  356  nanopolish index -d fast5/ON001-RNA-R00185/ fastq/RML1318-T1.fastq.gz 
+  357  nanopolish index
+  358  time nanopolish index -d fast5/ON001-RNA-R00185/ fastq/RML1318-T1.fastq.gz -f /mnt/volume1/fast5/seq_summary_list.txt 
+  359  cd /home/ubuntu/miniconda3/envs/xpore/lib/hdf5/plugin
+  360  cd /home/ubuntu/miniconda3/envs/xpore/lib/hdf5/
+  361  cd /home/ubuntu/miniconda3/envs/xpore/lib/
+  362  ll
+  363  cd ..
+  364  ll
+  365  cd bin/
+  366  ll
+  367  cd ..
+  368  cd lib
+  369  ll
+  370  cd /home/ubuntu/miniconda3/envs/xpore/bin/../lib/
+  371  ll
+  372  conda install -c anaconda hdf5
+  373  ll
+  374  cd ..
+  375  ll
+  376  find . -iname "libhdf5*"
+  377  cd lib
+  378  ll
+  379  find . -iname "libhdf5*"
+  380  pwd
+  381  ll
+  382  pwd
+  383  cd /home/ubuntu/miniconda3/envs/xpore/lib
+  384  ll
+  385  whihc nanopolish
+  386  which nanopolish
+  387  conda activate xpore
+  388  which nanopolish
+  389  ldd /home/ubuntu/miniconda3/envs/xpore/bin/nanopolish
+  390  pwd
+  391  ll
+  392  pwd
+  393  history | grep "nanopolish index"
+  394  nanopolish index
+  395  top
+  396  conda activate xpore
+  397  nanopolish index 
+  398  top
+  399  cd /mnt/volume1/
+  400  ll
+  401  cd fast5
+  402  ll
+  403  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/RML1318-T1/20210713_1310_X4_FAQ34751_3034dab6/sequencing_summary_FAQ34751_d00c0745.txt ON001-RNA-R00185/ --profile lizh
+  404  ll
+  405  aws s3 cp s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/RML1318-T1/20210713_1619_X4_FAQ34751_166dd443/sequencing_summary_FAQ34751_a0bf7539.txt ON001-RNA-R00185/ --profile lizh
+  406  ll
+  407  cd ON001-RNA-R00185/
+  408  ll
+  409  pwd
+  410  cd ..
+  411  cd results/minimap2/
+  412  ll
+  413  pwd
+  414  nanopolish eventalign
+  415  cd ..
+  416  nanopolish eventalign --reads fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  417  ldd your_app
+  418  ldd nanopolish
+  419  nanopolish
+  420  which nanopolish
+  421  ldd /home/ubuntu/miniconda3/envs/xpore/bin/nanopolish
+  422  cd /home/ubuntu/miniconda3/envs/xpore/lib
+  423  ll
+  424  cd 
+  425  cd /mnt/volume1/
+  426  nanopolish eventalign --reads fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  427  xpore -v
+  428  history | grep "xpore"
+  429  sudo apt-get install zlib1g-dev
+  430  ldd /home/ubuntu/miniconda3/envs/xpore/bin/nanopolish
+  431  vim ~/.bashr
+  432  vim ~/.bashrc
+  433  source ~/.bashrc
+  434  conda activate xpore
+  435  nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  436  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so  ldd /home/ubuntu/miniconda3/envs/xpore/bin/nanopolish
+  437  history | grep "nanopolish"
+  438  conda remove -n xpore nanopolish
+  439  cd 
+  440  cd software/
+  441  ll
+  442  git clone --recursive https://github.com/jts/nanopolish.git
+  443  cd nanopolish/
+  444  make
+  445  ll
+  446  nanopolish
+  447  cd 
+  448  which nanopolish
+  449  cd software/
+  450  ll
+  451  cd nanopolish/
+  452  ll
+  453  pwd
+  454  vim ~/.bashrc
+  455  source  ~/.bashrc
+  456  conda activate xpore
+  457  nanopolish
+  458  cd
+  459  which nanopolish
+  460  nanopolish
+  461  cd /mnt/volume1/
+  462  nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  463  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  464  cd /mnt/volume1/fastq/
+  465  ll
+  466  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  467  nanopolish eventalign
+  468  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 -v > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  469  history | grep "nanopolish"
+  470  history | grep "nanopolish index"
+  471  nanopolish index
+  472  time nanopolish index -d /mnt/volume1/fast5/ON001-RNA-R00185 /mnt/volume1/fastq/RML1318-T1.fastq.gz -f /mnt/volume1/fast5/seq_summary_list.txt
+  473  time nanopolish index -f /mnt/volume1/fast5/seq_summary_list.txt -d /mnt/volume1/fast5/ON001-RNA-R00185 /mnt/volume1/fastq/RML1318-T1.fastq.gz 
+  474  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  475  conda install -c conda-forge hdf5plugin
+  476  cd ..
+  477  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  478  find / -iname "hdf5plugin"
+  479  cd /home/ubuntu/miniconda3/pkgs/hdf5plugin-3.1.1-py39h621bcbd_0/lib/python3.9/site-packages/hdf5plugin
+  480  ll
+  481  vim ~/.bashrc
+  482  source  ~/.bashrc
+  483  echo $HDF5_PLUGIN_PATH
+  484  conda activate xpore
+  485  cd 
+  486  cd /mnt/volume1/
+  487  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  488  clear
+  489  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  490  h5repack
+  491  which h5repack
+  492  cd fast5/
+  493  ll
+  494  lsb_release -a
+  495  cd ..
+  496  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  497  HDFView
+  498  h5repack
+  499  h5py
+  500  HDFView
+  501  conda activate xpore
+  502  xpore dataprep
+  503  xpore dataprep -
+  504  xpore dataprep -h
+  505  which xpore
+  506  conda install -c conda-forge six=1.16.0
+  507  cd /mnt/volume1/
+  508  xpore dataprep -h
+  509  history | grep "conda" 
+  510  history | grep "conda remove" 
+  511  xpore dataprep -h
+  512  history | grep "pip" 
+  513  pip uninstall xpore
+  514  xpore
+  515  conda install -c bioconda xpore
+  516  python
+  517  pip install xpore
+  518  xpore
+  519  conda install -c anaconda h5py
+  520  xpore
+  521  pip install h5py==3.1.0
+  522  xpore
+  523  pip show argparse
+  524  conda env
+  525  conda env list
+  526  conda list
+  527  conda install -c conda-forge argparse
+  528  pip list
+  529  xpore
+  530  deactivate
+  531  conda deactivate
+  532  conda create --name xPORE python=3.9
+  533  conda activate xPORE
+  534  xpore
+  535  pip list
+  536  pip install xpore
+  537  xpore
+  538  pip list
+  539  pip uninstall xpore
+  540  pip list
+  541  conda install -c bioconda xpore
+  542  conda env remove --name xPORE
+  543  conda deactivate
+  544  conda env remove --name xPORE
+  545  conda create --name xPORE
+  546  conda activate xPORE
+  547  conda install -c bioconda xpore
+  548  conda deactivate
+  549  conda update -n base -c defaults conda
+  550  conda create --name xPORE
+  551  conda activate xPORE
+  552  conda install -c bioconda xpore
+  553  pip list
+  554  conda deactivate
+  555  conda env remove --name xPORE
+  556  conda create --name xPORE python=3.7 xpore
+  557  conda create --name xPORE python=3.7
+  558  conda activate xPORE
+  559  conda install -c bioconda xpore
+  560  pip list
+  561  pip install xpore
+  562  xpore
+  563  top
+  564  cd /mnt/volume1/
+  565  conda activate xpore
+  566  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1317_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1317-T1_summary.txt \
+  567  screen
+  568  conda atcivate xpore
+  569  conda activate xpore
+  570  cd /usr/local/hdf5/lib/plugin
+  571  cd /usr/local/hdf5/lib/
+  572  cd /home/ubuntu/miniconda3/envs/xpore/lib
+  573  ll
+  574  cd /usr/local/hdf5/lib/
+  575  cd /usr/local/hdf5
+  576  cd 
+  577  cd software/
+  578  ll
+  579  wget https://github.com/nanoporetech/vbz_compression/releases/download/v1.0.1/ont-vbz-hdf-plugin_1.0.1-1.bionic_amd64.deb
+  580  ll
+  581  chmod +x ont-vbz-hdf-plugin_1.0.1-1.bionic_amd64.deb
+  582  ll
+  583  sudo dpkg -i ont-vbz-hdf-plugin_1.0.1-1.bionic_amd64.deb
+  584  ll
+  585  h5repack
+  586  which h5repack
+  587  HDFView
+  588  sudo dpkg -i ont-vbz-hdf-plugin_1.0.1-1.bionic_amd64.deb
+  589  ll
+  590  cd /usr/local/hdf5/lib/plugin
+  591  ll
+  592  chmod +x libvbz_hdf_plugin.so
+  593  ll
+  594  sudo chmod +x libvbz_hdf_plugin.so
+  595  ll
+  596  vim ~/.bashrc
+  597  source  ~/.bashrc
+  598  conda activate xpore
+  599  echo $HDF5_PLUGIN_PATH
+  600  cd ..
+  601  cd /mnt/volume1/
+  602  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1318-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1318_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1318-T1_summary.txt --threads 16 > /mnt/volume1/fastq/RML1318-T1_eventalign.txt
+  603  conda activate xPORE
+  604  xpore
+  605  pip list
+  606  xpore
+  607  conda deactivate
+  608  conda env remove --name xPORE
+  609  conda create --name xPORE python=3.9
+  610  pip list
+  611  conda activate xPORE
+  612  pip list
+  613  pip install xpore
+  614  xpore
+  615  conda deactivate
+  616  conda env remove --name xPORE
+  617  conda create --name xPORE python=3.9
+  618  conda activate xPORE
+  619  cd software/
+  620  ll
+  621  git clone https://github.com/GoekeLab/xpore.git
+  622  cd xpore
+  623  python setup.py install
+  624  xpore
+  625  top
+  626  cd ..
+  627  ll
+  628  rm -rf xpore/
+  629  xpore
+  630  conda deactivate
+  631  conda env remove --name xPORE
+  632  xpore
+  633  conda create --name xPORE python=3.8
+  634  conda activate xPORE
+  635  pip install xpore 
+  636  xpore
+  637  xpore -h
+  638  xpore dataprep -h
+  639  histoy | grep "find"
+  640  history | grep "find"
+  641  nanopolish index 
+  642  cd
+  643  cd /mnt/volume1/
+  644  ll
+  645  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00184/ /mnt/volume1/data/ON001-RNA-R00184 --exclude "*" --include "*.fastq.gz" --include "*.fast5" --include "*/sequencing_summary*"
+  646  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00184/ /mnt/volume1/data/ON001-RNA-R00184 --exclude "*" --include "*.fastq.gz" --include "*.fast5" --include "*/sequencing_summary*" --profile lizh
+  647  history | grep "find"
+  648  find /mnt/volume1/data/ON001-RNA-R00184 -type f -iname "
+  649  find /mnt/volume1/data/ON001-RNA-R00184 -type f -iname "sequencing_summary*" -exec echo {} \; > /mnt/volume1/data/ON001-RNA-R00184/seq_summary_location.txt
+  650  find /mnt/volume1/data/ON001-RNA-R00184 -type f -iname "sequencing_summary*" -exec echo {} \; > /mnt/volume1/data/ON001-RNA-R00184/ON001-RNA-R00184.seq_summary_location
+  651  cd data/
+  652  ll
+  653  pwd
+  654  find /mnt/volume1/data/ON001-RNA-R00184 -type f -name '*.fastq.gz' exec cat {} \; > /mnt/volume1/data/ON001-RNA-R00184/RML1317-T1.fastq.gz
+  655  find /mnt/volume1/data/ON001-RNA-R00184 -type f -name '*.fastq.gz' -exec cat {} \; > /mnt/volume1/data/ON001-RNA-R00184/RML1317-T1.fastq.gz
+  656  ll
+  657  cd ON001-RNA-R00184/
+  658  ll
+  659  cd ..
+  660  nextflow
+  661  ll
+  662  nextflow run process_xpore.nf -resume
+  663  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz 
+  664  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  665  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location --fast5 */**.fast5
+  666  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location --fast5 */
+  667  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location --fast5 ON*/
+  668  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location --fast5_folder ON*/
+  669  top
+  670  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  671  pwd
+  672  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  673  chmod +x run_nanopolish_index.sh
+  674  ll
+  675  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  676  conda activate xPORE
+  677  nanopolish index -h
+  678  nanopolish eventalign -h
+  679  xpore dataprep
+  680  xpore dataprep -h
+  681  df -h
+  682  cd /mnt/volume1/
+  683  du -hs
+  684  du -hs /.
+  685  du -hs ./
+  686  du -hS ./
+  687  ll
+  688  du -hs fast5/
+  689  du -hs fastq/
+  690  cd data/
+  691  ll
+  692  chmod +x process_xpore.nf 
+  693  ll
+  694  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  695  cd /home/ubuntu/miniconda3/envs/xpore/lib/python3.9/site-packages/xpore/scripts/
+  696  cat dataprep.py
+  697  pwd
+  698  screen -r
+  699  screen 
+  700  top
+  701  screen -r
+  702  screen -r 8084.pts-1.ip-10-0-4-38
+  703  screen -r
+  704  screen -r 22805.pts-0.ip-10-0-4-38
+  705  top
+  706  screen -r
+  707  screen -r 8084.pts-1.ip-10-0-4-38
+  708  screen -r
+  709  screen -r 22805.pts-0.ip-10-0-4-38
+  710  conda activate xPORE
+  711  cd /mnt/volume1/
+  712  conda install -c bioconda minimap2
+  713  conda install -c bioconda minimap2=2.22
+  714  cd 
+  715  cd software/
+  716  ll
+  717  wget https://github.com/lh3/minimap2/releases/download/v2.22/minimap2-2.22_x64-linux.tar.bz2
+  718  tar -xf minimap2-2.22_x64-linux.tar.bz2
+  719  ll
+  720  cd minimap2-2.22_x64-linux/
+  721  ll
+  722  vim ~/.bashrc
+  723  pwd
+  724  vim ~/.bashrc
+  725  source ~/.bashrc
+  726  minimap2
+  727  cd
+  728  cd /mnt/volume1/
+  729  ll
+  730  cd genome/
+  731  ll
+  732  mkdir transcriptome
+  733  mv Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa transcriptome/
+  734  ll
+  735  cd transcriptome/
+  736  ll
+  737  minimap2 -d mfa_6.0_cdna.mmi Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa
+  738  ll
+  739  pwd
+  740  conda activate xPORE
+  741  minimap2
+  742  cd ..
+  743  screen
+  744  nanopolish index -h
+  745  screen -r
+  746  screen -r 831.pts-3.ip-10-0-4-38
+  747  screen -r
+  748  screen -r 8084.pts-1.ip-10-0-4-38
+  749  conda activate xPORE
+  750  samtools view 
+  751  cd /mnt/volume1/
+  752  ll
+  753  rm -rf work/
+  754  df -h
+  755  ll
+  756  cd genome/
+  757  ll
+  758  cd transcriptome/
+  759  ll
+  760  samtools index
+  761  samtools faidx
+  762  samtools faidx Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa 
+  763  ll
+  764  nanopolish eventalign -h
+  765  screen -r
+  766  cd ..
+  767  cd data/
+  768  ll
+  769  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  770  conda activate xpore
+  771  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam /mnt/volume1/results/minimap2/RML1317_R1.sorted.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1317-T1_summary.txt --threads 8 > /mnt/volume1/fastq/RML1317-T1_eventalign.txt
+  772  df -h
+  773  xpore dataprep
+  774  xpore dataprep -h
+  775  xpore dataprep --eventalign /mnt/volume1/fastq/RML1318-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00185/dataprep --genome
+  776  xpore dataprep --eventalign /mnt/volume1/fastq/RML1318-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00185/dataprep --genome --transcript_fasta_paths_or_urls http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/cdna/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz
+  777  xpore dataprep -h
+  778  xpore dataprep --eventalign /mnt/volume1/fastq/RML1318-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00185/dataprep --genome --transcript_fasta_paths_or_urls http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/cdna/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz --n_processes 8
+  779  xpore dataprep --eventalign /mnt/volume1/fastq/RML1318-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00185/dataprep --genome --n_processes 8
+  780  ll
+  781  cd genome/
+  782  wget http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/cdna/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz
+  783  gunzip Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz
+  784  ll
+  785  pwd
+  786  cd ..
+  787  xpore dataprep --eventalign /mnt/volume1/fastq/RML1318-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00185/dataprep --genome --transcript_fasta_paths_or_urls /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --n_processes 8
+  788  cd genome/
+  789  ll
+  790  cat Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa | grep ">"
+  791  head -200 Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa | grep ">"
+  792  cd ..
+  793  top
+  794  conda activate xPORE
+  795  cd /mnt/volume1/
+  796  xpore dataprep --eventalign /mnt/volume1/fastq/RML1317-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00184/dataprep --genome --transcript_fasta_paths_or_urls http://ftp.ensembl.org/pub/release-104/fasta/macaca_fascicularis/cdna/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa.gz --n_processes 8
+  797  xpore dataprep --eventalign /mnt/volume1/fastq/RML1317-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --out_dir /mnt/volume1/fastq/ON001-RNA-R00184/dataprep --genome --n_processes 8
+  798  xpore dataprep --eventalign /mnt/volume1/fastq/RML1317-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --transcript_fasta_paths_or_urls /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --out_dir /mnt/volume1/fastq/ON001-RNA-R00184/dataprep --genome --n_processes 8
+  799  top
+  800  screen -r
+  801  screen -r 831.pts-3.ip-10-0-4-38
+  802  screen -r
+  803  screen -r 8084.pts-1.ip-10-0-4-38
+  804  screen -r
+  805  screen -r 22805.pts-0.ip-10-0-4-38
+  806  screen -r
+  807  top
+  808  nanopolish -v
+  809  nanopolish --version
+  810  top
+  811  screen -r
+  812  top
+  813  screen -r
+  814  top
+  815  screen -r
+  816  screen -r
+  817  screen -d -r 831.pts-3.ip-10-0-4-38 
+  818  gcc --version
+  819  conda activate 16s
+  820  conda activate xPORE
+  821  gcc --version
+  822  cd /home/ubuntu/software/nanopolish/
+  823  ll
+  824  cd scripts/
+  825  ll
+  826  top
+  827  cd ..
+  828  ll
+  829  docker build .
+  830  docker ps
+  831  ll
+  832  docker ps -a
+  833  cd
+  834  cd /mnt/volume1/
+  835  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign --reads /data/fastq/RML1317-T1.fastq.gz --bam /data/RML1317-T1.bam -g /data/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary test_docker/RML1317-T1_summary.txt --threads 16 > test_docker/RML1317-T1_eventalign.txt
+  836  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign --reads /data/fastq/RML1317-T1.fastq.gz --bam /data/RML1317-T1.bam -g /data/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary /data/test_docker/RML1317-T1_summary.txt --threads 16 > /data/test_docker/RML1317-T1_eventalign.txt
+  837  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign --reads /data/fastq/RML1317-T1.fastq.gz --bam /data/RML1317-T1.bam -g /data/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary /data/RML1317-T1_1_summary.txt --threads 16 > /data/RML1317-T1_1_eventalign.txt
+  838  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign
+  839  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign --reads /data/fastq/RML1317-T1.fastq.gz --bam /data/RML1317-T1.bam -g /data/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary /data/RML1317-T1_1_summary.txt --threads 16 > /data/RML1317-T1_1_eventalign.txt
+  840  docker run -v /mnt/volume1/:/data/ -it 73a00a1a19ef ./nanopolish eventalign --reads /data/fastq/RML1317-T1.fastq.gz --bam /data/RML1317-T1.bam -g /data/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary /mnt/volume1/RML1317-T1_1_summary.txt --threads 16 > /mnt/volume1/RML1317-T1_1_eventalign.txt
+  841  conda activate xPORE
+  842  screen -d -r
+  843  history | grep "find"
+  844  pwd
+  845  cd /mnt/volume1/data/
+  846  ll
+  847  find aws_data/ON001-RNA-R00184/ -type f -name '*.fastq.gz' exec cat {} \; > aws_data/ON001-RNA-R00184/ON001-RNA-R00184.fq.gz
+  848  find aws_data/ON001-RNA-R00184/ -type f -name '*.fastq.gz' -exec cat {} \; > aws_data/ON001-RNA-R00184/ON001-RNA-R00184.fq.gz
+  849  find aws_data/ON001-RNA-R00185/ -type f -name '*.fastq.gz' -exec cat {} \; > aws_data/ON001-RNA-R00185/ON001-RNA-R00185.fq.gz
+  850  screen -r
+  851  ll
+  852  screen -r
+  853  cd /mnt/volume1/subsample/
+  854  aws s3 sync s3://rnaseqtempbucket/illuminadata/fastq/ . --profile lizh
+  855  seqtk
+  856  top
+  857  screen -r
+  858  top
+  859  ps -ef | grep "nextflow"
+  860  top
+  861  ps -ef | grep "xpore"
+  862  top
+  863  ps -ef | grep "nanopolish"
+  864  top
+  865  screen -r
+  866  cd /mnt/volume1/
+  867  ll
+  868  mkdir juicer_test
+  869  cd juicer_test/
+  870  wget http://juicerawsmirror.s3.amazonaws.com/opt/juicer/work/MBR19/fastq/chr19_R1.fastq.gz
+  871  screen -r
+  872  top
+  873  cd ..
+  874  cd subsample/
+  875  ll
+  876  seqtk
+  877  conda create --name subsample 
+  878  conda activate subsample
+  879  conda install -c bioconda seqtk
+  880  seqtk
+  881  seqtk sample
+  882  seqtk subseq 
+  883  seqtk sample
+  884  ll
+  885  seqtk sample -s100 ERR3218280_1.fastq.gz 100000 > ERR3218280_s100_1.fastq.gz
+  886  seqtk sample -s100 ERR3218280_2.fastq.gz 100000 > ERR3218280_s100_2.fastq.gz
+  887  seqtk sample -s100 ERR3218281_1.fastq.gz 100000 > ERR3218281_s100_1.fastq.gz
+  888  seqtk sample -s100 ERR3218281_2.fastq.gz 100000 > ERR3218281_s100_2.fastq.gz
+  889  seqtk sample -s100 ERR3218282_1.fastq.gz 100000 > ERR3218282_s100_1.fastq.gz
+  890  seqtk sample -s100 ERR3218282_2.fastq.gz 100000 > ERR3218282_s100_2.fastq.gz
+  891  seqtk sample -s100 ERR3218283_1.fastq.gz 100000 > ERR3218283_s100_1.fastq.gz
+  892  seqtk sample -s100 ERR3218283_2.fastq.gz 100000 > ERR3218283_s100_2.fastq.gz
+  893  aws configure --profile ronin
+  894  aws s3 sync . s3://rnaseq-sample-data.store.genome.sg/
+  895  aws s3 sync . s3://rnaseq-sample-data.store.genome.sg/ --profile ronin
+  896  screen -r
+  897  top
+  898  screen -r
+  899  top
+  900  screen -r
+  901  conda actiate xPORE
+  902  conda activate xPORE
+  903  xpore
+  904  xpore --help
+  905  xpore diffmod
+  906  xpore diffmod --help
+  907  screen -r
+  908  top
+  909  screen -r
+  910  conda activate xPORE
+  911  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  912  cd data/
+  913  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  914  nanopolish eventalign -h
+  915  top
+  916  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  917  df -h
+  918  which nanopolish
+  919  nanopolish -v
+  920  nanopolish --version
+  921  nanopolish -v
+  922  df -h
+  923  ll
+  924  du -hs work/
+  925  mkdir TEST
+  926  cd TEST/
+  927  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/data/ON001-RNA-R00184/RML1317-T1.fastq.gz --bam /mnt/volume1/data/work/22/92025e9375ed8958aa9dfb5fba95ca/RML1317-T1.bam --genome /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary RML1317-T1_summary.txt --threads 16 > RML1317-T1_eventalign.txt
+  928  df-h
+  929  df -h
+  930  cd ..
+  931  ll
+  932  du data/
+  933  du -hs data/
+  934  ll
+  935  cd results/
+  936  ll
+  937  cd ..
+  938  cd data/
+  939  ll
+  940  cd ..
+  941  ll
+  942  du -hs fast5
+  943  du -hs fastq
+  944  cd data/
+  945  rm -rf work/
+  946  df -h
+  947  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location
+  948  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location -with-report logs/report -with-trace
+  949  df -h
+  950  cd work/85/037d1f860993fc606c4a408220fdfc/
+  951  ll
+  952  nanopolish eventalign --reads /mnt/volume1/data/ON001-RNA-R00184/RML1317-T1.fastq.gz --bam RML1317-T1.bam --genome /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary RML1317-T1_summary.txt --threads 16 > RML1317-T1_eventalign.txt
+  953  cd ..
+  954  nextflow run process_xpore.nf -resume --reads **/*.fastq.gz  --seq_summary **/*.seq_summary_location -with-report logs/report -with-trace
+  955  df -h
+  956  cd ..
+  957  ll
+  958  minimap2 -ax map-ont -uf -t 16 --secondary=no /mnt/volume1/genome/transcriptome/mfa_6.0_cdna.mmi /mnt/volume1/fastq/RML1317-T1.fastq.gz > RML1317-T1.sam 2>> log_minimap2.txt
+  959  samtools view -@ 16 -Sb RML1317-T1.sam | samtools sort -o RML1317-T1.bam - >> log_sam2bam.txt ; samtools index RML1317-T1.bam >> log_bamIndex.txt
+  960  nanopolish index -f /mnt/volume1/data/ON001-RNA-R00184/ON001-RNA-R00184.seq_summary_location -d /mnt/volume1/data/ON001-RNA-R00184 /mnt/volume1/fastq/RML1317-T1.fastq.gz
+  961  which nanopolish
+  962  ll
+  963  samtools quickcheck RML1317-T1.bam
+  964  echo $?
+  965  mkdir test
+  966  cd test/
+  967  wget http://s3.climb.ac.uk/nanopolish_tutorial/ecoli_2kb_region.tar.gz
+  968  tar -xvf ecoli_2kb_region.tar.gz
+  969  cd ecoli_2kb_region/
+  970  ll
+  971  cd ..
+  972  curl -o ref.fa https://ftp.ncbi.nih.gov/genomes/archive/old_genbank/Bacteria/Escherichia_coli_K_12_substr__MG1655_uid225/U00096.ffn
+  973  ll
+  974  nanopolish eventalign 
+  975  cd ..
+  976  nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam RML1317-T1.bam --genome /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary RML1317-T1_summary.txt --threads 16 > RML1317-T1_eventalign.txt
+  977  nanopolish eventalign --version
+  978  LD_PRELOAD=/home/ubuntu/miniconda3/envs/xpore/lib/libasan.so nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam RML1317-T1.bam --genome /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary RML1317-T1_summary.txt --threads 16 > RML1317-T1_eventalign.txt
+  979  docker run -v /mnt/volume1/:/mnt/volume1/ -it 73a00a1a19ef ./nanopolish eventalign
+  980  docker run -v /mnt/volume1/:/mnt/volume1/ -it 73a00a1a19ef ./nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam /mnt/volume1/RML1317-T1.bam -g /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --signal-index --scale-events --summary /mnt/volume1/test_docker/RML1317-T1_summary.txt --threads 16 > /mnt/volume1/test_docker/RML1317-T1_eventalign.txt
+  981  docker run -v /mnt/volume1/:/mnt/volume1/ -it 73a00a1a19ef /bin/bash
+  982  cd /usr/local/hdf5/lib/plugin
+  983  ll
+  984  docker run -v /mnt/volume1/:/mnt/volume1/ -it 73a00a1a19ef /bin/bash
+  985  ll
+  986  cd /mnt/volume1/
+  987  xpore dataprep --eventalign /mnt/volume1/RML1317-T1_eventalign.txt --gtf_path_or_url /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.104.gtf --transcript_fasta_paths_or_urls /mnt/volume1/genome/transcriptome/Macaca_fascicularis.Macaca_fascicularis_6.0.cdna.all.fa --genome --out_dir dataprep --n_processes 16
+  988  echo $?
+  989  df -h
+  990  clear
+  991  df -h
+  992  history | grep "aws s3 sync"
+  993  cd data
+  994  ll
+  995  aws s3 sync s3://gis-nanopore-archive/GRIDION/ON001-RNA-R00185/ /mnt/volume1/data/ON001-RNA-R00185 --exclude "*" --include "*.fastq.gz" --include "*.fast5" --include "*/sequencing_summary*" --profile lizh
+  996  ll
+  997  mv ON001-RNA-R00185/ aws_data/
+  998  ll
+  999  history | grep "find"
+ 1000  find /mnt/volume1/data/ON001-RNA-R00185 -type f -iname "sequencing_summary*" -exec echo {} \; > /mnt/volume1/data/ON001-RNA-R00185/ON001-RNA-R00185.seq_summary_location
+ 1001  find /mnt/volume1/data/aws_data/ON001-RNA-R00185 -type f -iname "sequencing_summary*" -exec echo {} \; > /mnt/volume1/data/aws_data/ON001-RNA-R00185/ON001-RNA-R00185.seq_summary_location
+ 1002  find /mnt/volume1/data/aws_data/ON001-RNA-R00184 -type f -iname "sequencing_summary*" -exec echo {} \; > /mnt/volume1/data/aws_data/ON001-RNA-R00184/ON001-RNA-R00184.seq_summary_location
+ 1003  ll
+ 1004  rm -rf work/
+ 1005  df -h
+ 1006  ll
+ 1007  llclear
+ 1008  clear
+ 1009  ll
+ 1010  nextflow run process_xpore.nf -resume --reads aws_data/**/*.fastq.gz  --seq_summary aws_data/**/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1011  nextflow run process_xpore.nf -resume --reads 'aws_data/**/*.fastq.gz'  --seq_summary 'aws_data/**/*.seq_summary_location' -with-report logs/report.html -with-trace
+ 1012  nextflow run process_xpore.nf -resume --reads aws_data/**/*.fq.gz  --seq_summary aws_data/**/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1013  nextflow run process_xpore.nf -resume --reads aws_data/**/*.fastq.gz  --seq_summary aws_data/**/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1014  ll
+ 1015  nextflow run process_xpore.nf -resume --reads aws_data/**/*.fastq.gz  --seq_summary aws_data/**/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1016  nextflow run process_xpore.nf -resume --reads aws_data/*.fastq.gz  --seq_summary aws_data/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1017  nextflow run process_xpore.nf -resume --reads aws_data/*/*.fastq.gz  --seq_summary aws_data/*/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1018  history | grep "nanopolish"
+ 1019  which nanopolish
+ 1020  nextflow run process_xpore.nf -resume --reads aws_data/*/*.fastq.gz  --seq_summary aws_data/*/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1021  df -h
+ 1022  rm -rf work/
+ 1023  df -h
+ 1024  nextflow run process_xpore.nf -resume --reads aws_data/*.fastq.gz  --seq_summary aws_data/*.seq_summary_location -with-report logs/report.html -with-trace
+ 1025  rm -rf work/
+ 1026  nextflow run process_xpore.nf -resume -with-report logs/report.html -with-trace
+ 1027  nextflow run process_xpore.nf -resume -with-report logs/report.html
+ 1028  cp df -h
+ 1029  df -h
+ 1030  cp --help
+ 1031  cp -r work/45/9c0af238950e0dd40bed9cdc7839f8/dataprep xpore_results/ON001-RNA-R00185/dataprep
+ 1032  cp -r work/a4/b252fae70fb26a910314032e2864c3/dataprep xpore_results/ON001-RNA-R00184/dataprep
+ 1033  ll
+ 1034  cd xpore_results/
+ 1035  ll
+ 1036  xpore
+ 1037  xpore --help
+ 1038  xpore diffmod --help
+ 1039  xpore diffmod --config ../2sample_compare.yml --n_processes 16 --save_models --resume
+ 1040  ll
+ 1041  cd _xpore-diffmod/
+ 1042  ll
+ 1043  head -10 diffmod.table 
+ 1044  xpore postprocessing
+ 1045  xpore postprocessing --help
+ 1046  cd ..
+ 1047  xpore postprocessing --diffmod_dir _xpore-diffmod/ 
+ 1048  cd ..
+ 1049  ll
+ 1050  du  xpore_results/
+ 1051  du -S  xpore_results/
+ 1052  du -hS  xpore_results/
+ 1053  ll
+ 1054  cd xpore_results/
+ 1055  ll
+ 1056  tar -czvf ON001-RNA-R00184.tar.gz ON001-RNA-R00184/
+ 1057  tar -czvf ON001-RNA-R00185.tar.gz ON001-RNA-R00185/
+ 1058  ll
+ 1059  cd toSync/
+ 1060  ll
+ 1061  aws s3 sync . s3://gisanalysisreq/1150000137/xpore/ --profile lizh
+ 1062  cd ..
+ 1063  ll
+ 1064  cd results/
+ 1065  ll
+ 1066  cd ..
+ 1067  aws s3 sync . s3://gisanalysisreq/1150000137/nanoseq/ --profile lizh
+ 1068  ll
+ 1069  cd data/
+ 1070  ll
+ 1071  cd ..
+ 1072  ll
+ 1073  cd results/
+ 1074  ll
+ 1075  cd ..
+ 1076  aws s3 sync results/ s3://gisanalysisreq/1150000137/nanoseq/results/ --profile lizh
+ 1077  screen -r
+ 1078  conda activate xPORE
+ 1079  cd /mnt/volume1/
+ 1080  ll
+ 1081  sudo mount -t ext4 /dev/nvme1n1 /mnt/volume1
+ 1082  cd ..
+ 1083  cd volume1/
+ 1084  ll
+ 1085  cd fastq/
+ 1086  ll
+ 1087  cd ON001-RNA-R00184/
+ 1088  ll
+ 1089  cd ..
+ 1090  ll
+ 1091  nanopolish eventalign --reads /mnt/volume1/fastq/RML1317-T1.fastq.gz --bam /mnt/volume1/data/work/a2/f40af97778b4effea4586d2b3de550/ON001-RNA-R00184.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/fastq/RML1317-T1_1_summary.txt --threads 8 > /mnt/volume1/fastq/RML1317-T1_1_eventalign.txt
+ 1092  nanopolish eventalign --reads /mnt/volume1/data/aws_data/ON001-RNA-R00184.fastq.gz --bam /mnt/volume1/data/work/a2/f40af97778b4effea4586d2b3de550/ON001-RNA-R00184.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/data/ON001-RNA-R00184_summary.txt \
+ 1093  nanopolish eventalign --reads /mnt/volume1/data/work/f6/4edab43cad7945c6eae1f09bfd9305/ON001-RNA-R00184.fastq.gz --bam /mnt/volume1/data/work/a2/f40af97778b4effea4586d2b3de550/ON001-RNA-R00184.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/data/ON001-RNA-R00184_summary.txt \
+ 1094  cd ..
+ 1095  cd data/
+ 1096  ll
+ 1097  nanopolish eventalign --reads /mnt/volume1/data/work/f6/4edab43cad7945c6eae1f09bfd9305/ON001-RNA-R00184.fastq.gz --bam /mnt/volume1/data/work/a2/f40af97778b4effea4586d2b3de550/ON001-RNA-R00184.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/data/ON001-RNA-R00184_summary.txt --threads 8 > /mnt/volume1/data/ON001-RNA-R00184_eventalign.txt
+ 1098  cd /mnt/volume1/
+ 1099  ll
+ 1100  cd data/
+ 1101  ll
+ 1102  cd xpore_results/
+ 1103  ll
+ 1104  cd ..
+ 1105  ll
+ 1106  cd ..
+ 1107  cd tomd5sum/
+ 1108  ll
+ 1109  cd xpore/
+ 1110  ll
+ 1111  cd _xpore-diffmod/
+ 1112  ll
+ 1113  tar -czvf models.tar.gz models/
+ 1114  cd software/
+ 1115  ll
+ 1116  mkdir test
+ 1117  cd test/
+ 1118  ll
+ 1119  git clone --recursive https://github.com/jts/nanopolish.git
+ 1120  cd nanopolish
+ 1121  make
+ 1122  ll
+ 1123  cd software/test/nanopolish/
+ 1124  ll
+ 1125  ./nanopolish eventalign --reads /mnt/volume1/data/work/f6/4edab43cad7945c6eae1f09bfd9305/ON001-RNA-R00184.fastq.gz --bam /mnt/volume1/data/work/a2/f40af97778b4effea4586d2b3de550/ON001-RNA-R00184.bam --genome /mnt/volume1/genome/Macaca_fascicularis.Macaca_fascicularis_6.0.dna.primary_assembly.fa --signal-index --scale-events --summary /mnt/volume1/data/ON001-RNA-R00184_summary.txt --threads 8 > /mnt/volume1/data/ON001-RNA-R00184_eventalign.txt
+ 1126  screen -r
+ 1127  cd /mnt/volume1/
+ 1128  ll
+ 1129  cd tomd5sum/
+ 1130  ll
+ 1131  cd xpore/
+ 1132  ll
+ 1133  cd _xpore-diffmod/
+ 1134  ll
+ 1135  cd models/
+ 1136  ll
+ 1137  conda activate xPORE
+ 1138  conda install -c conda-forge parallel
+ 1139  cd /mnt/volume1/
+ 1140  ll
+ 1141  cd tomd5sum/
+ 1142  cd xpore/_xpore-diffmod/models/
+ 1143  ll
+ 1144  ls *.hdf5 | parallel -k 'gzip {} '
+ 1145  ls *.hdf5 | parallel -k 'gzip {} '
+ 1146  cd ..
+ 1147  du models
+ 1148  du -h models
+ 1149  aws s3 sync models/ s3://gisanalysisreq/1150000137/xpore/_xpore-diffmod/models/ --profile lizh
+ 1150  lsblk
+ 1151  sudo mount -t ext4 /dev/nvme1n1 /mnt/volume1
+ 1152  conda env list
+ 1153  history | grep "conda"
+ 1154  ll
+ 1155  conda list
+ 1156  which nanopolish
+ 1157  history | grep "nanopolish"
+ 1158  cd /mnt/volume1/data/git/
+ 1159  git init
+ 1160  git clone https://github.com/Solyris83/xPORE_nextflow.git
+ 1161  ll
+ 1162  cd X
+ 1163  cd xPORE_nextflow/
+ 1164  git add *
+ 1165  ll
+ 1166  which nanopolis
+ 1167  which nanopolish
+ 1168  conda env export --name xPORE > xPORE.yml
+ 1169  history | grep "nextflow"
+ 1170  git add *
+ 1171  git commit -m "Initial Commit: logging of code and files"
+ 1172  git push https://github.com/Solyris83/xPORE_nextflow
+ 1173  history > history.log
