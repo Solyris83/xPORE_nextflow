@@ -1,12 +1,12 @@
 # xPORE_nextflow
 
 Install
-1. Nanopolish
-		git clone --recursive https://github.com/jts/nanopolish.git
-		cd nanopolish/
-		make
+1. Nanopolish \
+		git clone --recursive https://github.com/jts/nanopolish.git\
+		cd nanopolish/ \
+		make \
 2. Miniconda
-3. Install environment with yaml file
+3. Install environment with yaml file \
 		conda env create --file xPORE.yml
 
 USAGE
