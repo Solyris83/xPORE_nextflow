@@ -2,12 +2,12 @@
 
 Install
 1. Nanopolish
-	git clone --recursive https://github.com/jts/nanopolish.git
-	cd nanopolish/
-	make
+	a. git clone --recursive https://github.com/jts/nanopolish.git
+	b. cd nanopolish/
+	c. make
 2. Miniconda
 3. Install environment with yaml file
-	conda env create --file xPORE.yml
+	a. conda env create --file xPORE.yml
 
 USAGE
 1. conda activate xPORE
