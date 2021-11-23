@@ -1,0 +1,9 @@
+notes: Pairwise comparison without replicates with default parameter setting.
+
+data:
+    ON001-RNA-R00184:
+        rep1: /mnt/volume1/data/xpore_results/ON001-RNA-R00184/dataprep
+    ON001-RNA-R00185:
+        rep1: /mnt/volume1/data/xpore_results/ON001-RNA-R00185/dataprep
+
+out: /mnt/volume1/data/xpore_results/_xpore-diffmod # output dir
