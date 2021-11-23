@@ -2,7 +2,7 @@
 
 Install
 1. Nanopolish \
-		git clone --recursive https://github.com/jts/nanopolish.git\
+		git clone --recursive https://github.com/jts/nanopolish.git \
 		cd nanopolish/ \
 		make \
 2. Miniconda
